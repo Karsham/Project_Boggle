@@ -3,7 +3,7 @@ package boggle;
 import java.io.*;
 
 /** 
- * La classe ImportFile permet d'importer les données d'un fichier CSV ou TXT.
+ * La classe ImportFile permet d'importer les données d'un fichier CSV.
  */
 public class ImportFile {
 
@@ -24,16 +24,29 @@ public class ImportFile {
 			BufferedReader br = new BufferedReader(new FileReader(path));
 			String ligne;
 
+			boolean flagCSV = false;
+			if ( (path.substring(path.length()-3, path.length())).equals("csv") ) {
+				flagCSV = true;
+			}
+
 			while ( (ligne = br.readLine()) != null ) {
 
-				String[] splitted = ligne.split("\\;");
-				for (int i=0;i<splitted.length;i++){
-					result += splitted[i];
-					if (i!=5) {
-						result += ";";
+				if (flagCSV == true) {
+
+					String[] splitted = ligne.split("\\;");
+					for (int i=0;i<splitted.length;i++){
+						result += splitted[i];
+						if (i!=5) {
+							result += ";";
+						}
 					}
+					result += "\n";
+					
+				}else if (flagCSV == false){
+					result += ligne + "\n" ;
 				}
-				result += "\n";
+
+				
 			}
 			result = result.substring(0, result.length()-1); //Pour enlever le dernier \n
 
@@ -72,6 +85,17 @@ public class ImportFile {
 		}
 
 		return res;
+	}
+
+	public static void main(String[] args) {
+		String tamere = new File("./").getAbsolutePath();
+		tamere = tamere.substring(0, tamere.length()-1) + "config/regles.txt";
+		try{
+			ImportFile regles = new ImportFile( tamere );
+			System.out.println( regles.getResult() );		
+		}catch( Exception e ){
+			System.out.println("Erreur : "+e.getMessage());
+		}
 	}
 
 }

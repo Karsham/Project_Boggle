@@ -53,23 +53,18 @@ public class GrilleLettres {
      * 
      * @return Un tableau des faces visibles du plateau de jeu.
      */
-    public String[] getFacesVisibles(){
-        String[] facesVisibles = new String[NOMBRE_DES];
+    public void getFacesVisibles(){
         for (int i=0; i<NOMBRE_DES; i++) {
-            facesVisibles[i] = des[i].getFaceVisible();
-        }
-        return facesVisibles;
-    }
-
-    public static void main(String[] args) {
-        GrilleLettres grille = new GrilleLettres();
-        String[] tab = grille.getFacesVisibles();
-        for (int i=0; i<tab.length; i++) {
-            System.out.print(tab[i]);
+            System.out.print( des[i].getFaceVisible() + " ");
             if (((i+1) % 4) == 0) {
                 System.out.println();
             }
         }
+    }
+
+    public static void main(String[] args) {
+        GrilleLettres grille = new GrilleLettres();
+        grille.getFacesVisibles();
     }
 
 }
