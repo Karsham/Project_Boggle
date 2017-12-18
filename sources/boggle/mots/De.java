@@ -1,6 +1,5 @@
 package boggle.mots ;
 
-import boggle.*; 
 import java.util.* ;
 import java.io.*;
 

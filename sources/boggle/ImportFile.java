@@ -1,8 +1,6 @@
 package boggle;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 
 /** La classe ImportFile permet d'importer les données d'un fihcier CSV.
  */
@@ -54,7 +52,7 @@ public class ImportFile {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
-		ImportFile txt = new ImportFile("/home/infoetu/chabenir/DA2I/Projet_GL/Project_Boggle/config/des-4x4.csv");
+		ImportFile txt = new ImportFile(new File("./").getAbsolutePath() + "/config/des-4x4.csv");
 		System.out.println(txt.getResult());
 		System.out.println();
 

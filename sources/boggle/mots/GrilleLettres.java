@@ -20,7 +20,7 @@ public class GrilleLettres {
     public void initialiserDes(){
 
         try{
-            ImportFile dataDes = new ImportFile("/home/infoetu/chabenir/DA2I/Projet_GL/BoggleTastic/config/des-4x4.csv");
+            ImportFile dataDes = new ImportFile(new File("./").getAbsolutePath() + "/config/des-4x4.csv");
             String [][] datas = dataDes.getResultTab(NOMBRE_DES, NOMBRE_FACES);
 
             for (int i=0; i<NOMBRE_DES; i++) {
@@ -45,7 +45,10 @@ public class GrilleLettres {
         GrilleLettres grille = new GrilleLettres();
         String[] tab = grille.getFacesVisibles();
         for (int i=0; i<tab.length; i++) {
-            System.out.println(tab[i]);
+            System.out.print(tab[i]);
+            if (((i+1) % 4) == 0) {
+                System.out.println();
+            }
         }
     }
 
