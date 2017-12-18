@@ -2,15 +2,23 @@ package boggle;
 
 import java.io.*;
 
-/** La classe ImportFile permet d'importer les données d'un fihcier CSV.
+/** 
+ * La classe ImportFile permet d'importer les données d'un fichier CSV ou TXT.
  */
 public class ImportFile {
 
+	/** 
+	 * La chaîne qui contient le résultat de l'extraction de données.
+	 */
 	private String result = "";
 
+	/** 
+	 * Le constructeur <code>ImportFile</code> qui permet d'instancier l'objet à partir du chemin d'un fichier.
+	 *
+	 * @param path
+	 *				Le chemin du fichier à analyser.
+	 */
 	public ImportFile(String path) throws FileNotFoundException {
-
-    	// FileInputStream fis = new FileInputStream(datas);
 		try {
 
 			BufferedReader br = new BufferedReader(new FileReader(path));
@@ -36,10 +44,25 @@ public class ImportFile {
 		}
 	}
 
+	/**
+	 * Retourne les données extraites.
+	 * 
+	 * @return Une chaîne de caractères, qui correspond aux données extraites.
+	 */
 	public String getResult(){
 		return result;
 	}
 
+	/**
+	 * Retourne les données de l'attribut <strong>result</strong> sous forme de tableau.
+	 *
+	 * @param ligne
+	 *				Le nombre de lignes que contiendra le tableau retourné.
+	 * @param colonne
+	 *				Le nombre de colonnes que contiendra le tableau retourné.
+	 *
+	 * @return Une représentation sous forme de tableau des données extraites.
+	 */
 	public String[][] getResultTab(int ligne, int colonne){
 		String[][] res = new String[ligne][colonne];
 
@@ -49,20 +72,6 @@ public class ImportFile {
 		}
 
 		return res;
-	}
-
-	public static void main(String[] args) throws FileNotFoundException {
-		ImportFile txt = new ImportFile(new File("./").getAbsolutePath() + "/config/des-4x4.csv");
-		System.out.println(txt.getResult());
-		System.out.println();
-
-		String[][] look = txt.getResultTab(16,6);
-		for (int i=0; i<look.length; i++) {
-			for (int j=0; j<look[i].length; j++) {
-				System.out.print( (j+1) +" : "+look[i][j]+ " | " );
-			}
-			System.out.println();
-		}
 	}
 
 }
