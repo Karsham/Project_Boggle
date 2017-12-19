@@ -11,14 +11,25 @@ import java.io.*;
  */
 public class InterfaceUserText {
 
-	int choice = 0;
+	/**
+     * Exécute le jeu.
+     */
+	private static void jeu(){
+		System.out.println("Coming soon...");
+	}
 
-	public void grille(){
+	/**
+     * Affiche une grille de jeu.
+     */
+	private static void grille(){
 		GrilleLettres grille = new GrilleLettres();
         grille.getFacesVisibles();
 	}
 
-	public void regles(){
+	/**
+     * Affiche les règles à partir d'un fichier txt.
+     */
+	private static void regles(){
 		String absolutePath = new File("./").getAbsolutePath();
 		String path = absolutePath.substring(0, absolutePath.length()-1) + "config/regles.txt";
 		try{
@@ -31,7 +42,10 @@ public class InterfaceUserText {
 		
 	}
 
-	public void menu(){
+	/**
+     * Affiche le menu, et exécute la commande demandée.
+     */
+	public static int menu(){
 		System.out.println("Que voulez-vous faire ?\n");
 
 		System.out.println("1. Jouer");
@@ -40,24 +54,20 @@ public class InterfaceUserText {
 		System.out.println("4. Quitter\n");
 
 		System.out.print("Tapez le chiffre pour le choix voulu : ");
-		choice = Clavier.readInt();
+		int choice = Clavier.readInt();
 
+		System.out.print("\033[H\033[2J");
 		if (choice == 1){
-			System.out.println("Coming soon...");
-			//jeu();
+			jeu();
 		}else if(choice == 2){
 			grille();
 		}else if(choice == 3){
 			regles();
+		}else if(choice == 4){
+			System.out.println("AU REVUAR !");
 		}
-	}
 
-	public void execute(){
-		System.out.println("Bienvenue dans Project_Boggle.\n");
-		while(choice != 4){
-			menu();
-		}
-		System.out.println("AU REVUAR !");
+		return choice;
 	}
 
 }

@@ -4,14 +4,12 @@
 
 shopt -s expand_aliases # Must set this option, else script will not expand aliases.
 
-alias projet='cd; cd DA2I/Projet_Java/Project_Boggle'
 alias bogglecomp='javac -sourcepath sources -d classes sources/boggle/*.java'
 alias motscomp='javac -sourcepath sources -d classes sources/boggle/mots/*.java'
 alias uicomp='javac -sourcepath sources -d classes sources/boggle/ui/*.java'
 alias jeucomp='javac -sourcepath sources -d classes sources/boggle/jeu/*.java'
 
-projet;
-bogglecomp;
-motscomp;
-uicomp;
-jeucomp;
+bogglecomp;echo "boggle : $?";
+motscomp;echo "mots : $?";
+uicomp;echo "ui : $?";
+jeucomp;echo "jeu : $?";
