@@ -9,14 +9,7 @@ alias motscomp='javac -sourcepath sources -d classes sources/boggle/mots/*.java'
 alias uicomp='javac -sourcepath sources -d classes sources/boggle/ui/*.java'
 alias jeucomp='javac -sourcepath sources -d classes sources/boggle/jeu/*.java'
 
-<<<<<<< HEAD
 bogglecomp;echo "boggle : $?";
 motscomp;echo "mots : $?";
 uicomp;echo "ui : $?";
 jeucomp;echo "jeu : $?";
-=======
-bogglecomp;
-motscomp;
-uicomp;
-jeucomp;
->>>>>>> ArbreLexical à finir: motCommencantPar
