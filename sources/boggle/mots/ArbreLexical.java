@@ -1,6 +1,7 @@
 package boggle.mots ;
 
 import java.util.List ;
+import java.io.*;
 import boggle.ImportFile;
 import java.io.*;
 import java.text.*;
