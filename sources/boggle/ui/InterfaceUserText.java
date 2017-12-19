@@ -34,25 +34,30 @@ public class InterfaceUserText {
 	public void menu(){
 		System.out.println("Que voulez-vous faire ?\n");
 
-		System.out.println("1. Afficher une grille");
-		System.out.println("2. Voir les règles");
-		System.out.println("3. Quitter\n");
+		System.out.println("1. Jouer");
+		System.out.println("2. Afficher une grille");
+		System.out.println("3. Voir les règles");
+		System.out.println("4. Quitter\n");
 
 		System.out.print("Tapez le chiffre pour le choix voulu : ");
 		choice = Clavier.readInt();
 
 		if (choice == 1){
-			grille();
+			System.out.println("Coming soon...");
+			//jeu();
 		}else if(choice == 2){
+			grille();
+		}else if(choice == 3){
 			regles();
 		}
 	}
 
 	public void execute(){
 		System.out.println("Bienvenue dans Project_Boggle.\n");
-		while(choice != 3){
+		while(choice != 4){
 			menu();
 		}
+		System.out.println("AU REVUAR !");
 	}
 
 }
