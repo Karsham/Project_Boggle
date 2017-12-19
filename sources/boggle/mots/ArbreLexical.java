@@ -2,6 +2,8 @@ package boggle.mots ;
 
 import java.util.List ;
 import boggle.ImportFile;
+import java.io.*;
+import java.text.*;
 
 /** La classe ArbreLexical permet de stocker de façon compacte et
  * d'accéder rapidement à un ensemble de mots.*/
@@ -18,8 +20,10 @@ public class ArbreLexical {
     }
 
 
-    /** Indique si le noeud courant est situé à l'extrémité d'un mot
-     * valide */
+    /**
+    * Indique si l'arbre lexical est un mot
+    * @return true si c'est le cas, false sinon
+    */
     public boolean estMot() {
       return estMot ;
     }
@@ -31,6 +35,26 @@ public class ArbreLexical {
     */
     private static int convert(char c) {
       return (Character.getNumericValue(Character.toLowerCase(c)) - 10);
+    }
+
+    /**
+    * Fonction convertissant un mot en minuscules, sans accets ou caractères spéciaux
+    * @param word le mot à transformer
+    * @return le mot convertit, ou une chaîne vide s'il ne peut être convertit
+    */
+    private static String normalize(String word) {
+
+      word = Normalizer.normalize(word, Normalizer.Form.NFD);
+      word = word.replaceAll("[^\\p{ASCII}]", "");
+      // Met en minuscules
+      word = word.toLowerCase();
+      // Supprime les caractères spéciaux
+      if(word.matches("^[a-z]+$")) {
+        return word;
+      }
+      else {
+        return "";
+      }
     }
 
 
@@ -80,7 +104,15 @@ public class ArbreLexical {
     */
     public boolean contient(String word) {
 
+      // Normalisation du mot
+      word = normalize(word);
+
       int l = word.length();
+
+      if(l == 0) {
+        return false;
+      }
+
       char[] charWord;
       charWord = word.toCharArray();
 
@@ -112,44 +144,115 @@ public class ArbreLexical {
      * @return <code>true</code> si <code>resultat</code> a été
      * modifié, <code>false</code> sinon.*/
     public boolean motsCommencantPar(String prefixe, List<String> resultat) {
-        // à compléter
-        return false ;
+
+      // Normalisation de la chaîne à rechercher
+      prefixe = normalize(prefixe);
+      if(prefixe.length() == 0) {
+        return false;
+      }
+
+      if(this.contient(prefixe)) {
+        // On se positionne sur l'arbre lexical de la dernière lettre du préfixe
+        ArbreLexical a = this.getTo(prefixe);
+
+        // On cherche tous les mots de a
+        // A FINIR 
+
+
+
+        // Si on en a trouvé, on retourne true, sinon, false
+        if(resultat.size() != 0) {
+          return true;
+        }
+        else {
+          return false;
+        }
+
+
+      }
+      else {
+        return false;
+      }
+    }
+
+    /**
+    * Se positionne à la dernière lettre de word et renvoie l'arbre lexical correspondanr
+    * @param word le mot à chercher
+    * @return l'arbre lexical correspondant à la dernière lettre de xord
+    */
+    private ArbreLexical getTo(String word) {
+
+      int l = word.length();
+      char[] charWord;
+      charWord = word.toCharArray();
+
+      int position = convert(charWord[0]);
+
+      if(l == 1) {
+        return this.fils[position];
+      }
+      else {
+        return this.getTo(word.substring(1));
+      }
+
     }
 
     /** Crée un arbre lexical qui contient tous les mots du fichier
      * spécifié. */
     public static ArbreLexical lireMots(String fichier) {
 
-      String chemin = new File('./').getAbsolutePath();
+      ArbreLexical a = new ArbreLexical();
+      int cpt = 0;
+      String chemin = new File("./").getAbsolutePath();
+      String dico = chemin.substring(0, chemin.length() - 1) + fichier;
 
-      String dico = chemin.substring(0, chemin.length() - 1) + "config/dict-fr.txt";
+      BufferedReader br = null;
 
       try {
-        ImportFile ifdico = new ImportFile(dico);
+
+        br = new BufferedReader(new FileReader(dico));
+        String line;
+        while((line = br.readLine()) != null) {
+
+          // Normalisation du mot
+          String word = normalize(line);
+          if(word.length() != 0) {
+            a.ajouter(word);
+          }
+          else {
+            continue;
+          }
+          cpt++;
+        }
+
       }
       catch(Exception e) {
-        System.out.println("Erreur : "+e.getMessage());
+        e.printStackTrace();
+      }
+      finally {
+        try {
+          br.close();
+        }
+        catch(Exception e) {
+          e.printStackTrace();
+        }
       }
 
-      
+      System.out.println(cpt + " mots ajoutés.");
 
-
-
-
-
-
-
-        return null ;
+        return a ;
     }
 
 
     public static void main(String [] args) {
 
       ArbreLexical a = new ArbreLexical();
-      a.ajouter("les");
-      System.out.println(a.contient("les"));
-      System.out.println(a.contient("lese"));
-      System.out.println(a.contient("ls"));
+
+      a = lireMots("config/dict-fr.txt");
+
+      System.out.println(a.contient("&confiancé"));
+
+
 
     }
 }
