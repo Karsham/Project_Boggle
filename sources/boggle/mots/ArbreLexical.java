@@ -1,6 +1,7 @@
 package boggle.mots ;
 
 import java.util.List ;
+import boggle.ImportFile;
 
 /** La classe ArbreLexical permet de stocker de façon compacte et
  * d'accéder rapidement à un ensemble de mots.*/
@@ -34,10 +35,10 @@ public class ArbreLexical {
 
 
     /**
-     * Place le mot spécifié dans l'arbre
-     * @return <code>true</code> si le mot a été ajouté,
-     * <code>false</code> sinon
-     */
+    * Ajoute un mot dans l'arbre
+    * @param word le mot à ajouter
+    * @return true si l'ajout a été effectué, false sinon
+    */
     public boolean ajouter(String word) {
 
       int l = word.length();
@@ -72,11 +73,11 @@ public class ArbreLexical {
       }
     }
 
-    /** Teste si l'arbre lexical contient le mot spécifié.
-    @return <code>true</code> si <code>o</code> est un mot
-    (String) contenu dans l'arbre, <code>false</code> si
-    <code>o</code> n'est pas une instance de String ou si le mot
-    n'est pas dans l'arbre lexical. */
+    /**
+    * Teste si l'arbre lexical contient le mot spécifié.
+    * @param word le mot à rechercher
+    * @return true si le mot est contenu dans l'arbre, false sinon.
+    */
     public boolean contient(String word) {
 
       int l = word.length();
@@ -87,12 +88,17 @@ public class ArbreLexical {
 
       // Si on est à la dernière lettre de word, on vérifie si estMot = true
       if(l == 1) {
-        return this.estMot();
+        if(this.fils[position] == null) {
+          return false;
+        }
+        else {
+          return this.fils[position].estMot();
+        }
       }
 
       // Si la position est contenue dans this, on passe à ce fils de this
       // Sinon, on retourne false
-      if(this.fils[position] != null) {
+      if(this.fils[position] == null) {
         return false;
       }
       else {
@@ -113,7 +119,26 @@ public class ArbreLexical {
     /** Crée un arbre lexical qui contient tous les mots du fichier
      * spécifié. */
     public static ArbreLexical lireMots(String fichier) {
-        // à compléter
+
+      String chemin = new File('./').getAbsolutePath();
+
+      String dico = chemin.substring(0, chemin.length() - 1) + "config/dict-fr.txt";
+
+      try {
+        ImportFile ifdico = new ImportFile(dico);
+      }
+      catch(Exception e) {
+        System.out.println("Erreur : "+e.getMessage());
+      }
+
+      
+
+
+
+
+
+
+
         return null ;
     }
 
@@ -123,7 +148,8 @@ public class ArbreLexical {
       ArbreLexical a = new ArbreLexical();
       a.ajouter("les");
       System.out.println(a.contient("les"));
-
+      System.out.println(a.contient("lese"));
+      System.out.println(a.contient("ls"));
 
     }
 }
