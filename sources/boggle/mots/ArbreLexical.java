@@ -1,6 +1,6 @@
 package boggle.mots ;
 
-import java.util.List ;
+import java.util.* ;
 import boggle.ImportFile;
 import java.io.*;
 import java.text.*;
@@ -10,6 +10,7 @@ import java.text.*;
 public class ArbreLexical {
 
     public static final int TAILLE_ALPHABET = 26 ;
+    private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
     private boolean estMot ; // vrai si le noeud courant est la fin d'un mot valide
     private ArbreLexical[] fils; // les sous-arbres
 
@@ -145,42 +146,153 @@ public class ArbreLexical {
      * modifié, <code>false</code> sinon.*/
     public boolean motsCommencantPar(String prefixe, List<String> resultat) {
 
+      ArbreLexical a = null;
+
+      // La liste des débuts de mots
+      ArrayList<String> debutsMots = new ArrayList<String>();
+
       // Normalisation de la chaîne à rechercher
       prefixe = normalize(prefixe);
       if(prefixe.length() == 0) {
         return false;
       }
 
-      if(this.contient(prefixe)) {
-        // On se positionne sur l'arbre lexical de la dernière lettre du préfixe
-        ArbreLexical a = this.getTo(prefixe);
-
-        // On cherche tous les mots de a
-        // A FINIR 
-
-
-
-        // Si on en a trouvé, on retourne true, sinon, false
-        if(resultat.size() != 0) {
-          return true;
-        }
-        else {
-          return false;
-        }
+      // On se positionne sur l'arbre lexical de la dernière lettre du préfixe
+      try {
+        a = this.getTo(prefixe);
+      }
+      catch(Exception e) {
+        // Cas où le préfixe n'est pas contenu dans l'arbre
+        return false;
+      }
 
 
+      // Si a est un mot, on le rajoute dans la liste
+      if(a.estMot()) {
+        resultat.add(prefixe);
+      }
+
+      // Dans tous les cas, on rajoute le préfixe à la liste des débuts de mots
+      debutsMots.add(prefixe);
+
+      // On cherche tous les mots de this commençant par le mot de résultat
+      resultat = this.searchAllWords(debutsMots, resultat);
+
+      System.out.println(resultat);
+
+
+      // Si on en a trouvé, on retourne true, sinon, false
+      if(resultat.size() != 0) {
+        return true;
       }
       else {
         return false;
       }
+
     }
 
     /**
-    * Se positionne à la dernière lettre de word et renvoie l'arbre lexical correspondanr
-    * @param word le mot à chercher
-    * @return l'arbre lexical correspondant à la dernière lettre de xord
+    * Méthode qui cherche tous les mots contenus dans un arbre
+    * @param a l'arbre dans lequel chercher
+    * @param debutsMots la liste des commencements de mots possibles
+    * @param motsFinis la liste des mots complets
+    * @return la liste des mots finis
     */
-    private ArbreLexical getTo(String word) {
+    private List<String> searchAllWords(List<String> debutsMots, List<String> motsFinis) {
+
+      int l = debutsMots.size();
+      System.out.println("l: " + l);
+
+      // Arbre lexical suivant
+      ArbreLexical temp = null;
+
+      // Liste temporaire de débuts de mots trouvés
+      ArrayList<String> tempDebutsMots = new ArrayList<String>();
+
+      // Condition d'arrêt: debutsMots est vide => retourner motsFinis
+      if(l == 0) {
+        return motsFinis;
+      }
+
+      // Pour chaque mot de debutsMots, on recherche l'arbre correspondant
+      for(int j = 0; j < l; j++) {
+
+        String word = debutsMots.get(j);
+
+        System.out.println("word: " + word);
+
+        // Aller à l'arbre correspondant
+        try {
+          temp = this.getTo(word);
+        }
+        catch(Exception e) {
+          // Rien à faire ici, le mot est forcément contenu dans l'arbre
+        }
+
+        // Aller à toutes les lettres suivantes.
+        for(int i = 0; i < 26; i++) {
+          // Si l'arbre fils est null, on ne fait rien.
+          if(temp.fils[i] != null) {
+            // Si l'arbre résultant est un mot
+            if(temp.fils[i].estMot()) {
+              // On le rajoute à motsfinis
+              String nouveauMotFini = word + alphabet.substring(i, i + 1);
+              System.out.println("nouveauMotFini: " +  nouveauMotFini);
+              motsFinis.add(nouveauMotFini);
+            }
+            // Si ça n'est pas un mot
+            else {
+              // On le rajoute à debutsMots
+              String nouveauDebutDeMot = word + alphabet.substring(i, i + 1);
+              System.out.println("nouveauDebutDeMot: " +  nouveauDebutDeMot);
+              tempDebutsMots.add(nouveauDebutDeMot);
+            }
+          }
+        }
+      }
+
+      // On remplace l'ancienne liste de débuts de mots qui viennent d'être examinés
+      // par la nouvelle liste trouvée
+      debutsMots = tempDebutsMots;
+
+
+      // Lancer searchAllWords avec les 2 nouvelles listes
+      return this.searchAllWords(debutsMots, motsFinis);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+    * Se positionne à la dernière lettre de word et renvoie l'arbre lexical correspondant
+    * @param word le mot à chercher
+    * @return l'arbre lexical correspondant à la dernière lettre de word
+    * @throws Exception si le mot n'existe pas dans l'arbre
+    */
+    private ArbreLexical getTo(String word) throws Exception {
 
       int l = word.length();
       char[] charWord;
@@ -188,17 +300,26 @@ public class ArbreLexical {
 
       int position = convert(charWord[0]);
 
-      if(l == 1) {
-        return this.fils[position];
+
+      if(this.fils[position] == null) {
+        throw new Exception("Mot qui n'existe pas");
       }
       else {
-        return this.getTo(word.substring(1));
+        if(l == 1) {
+          return this.fils[position];
+        }
+        else {
+          return this.fils[position].getTo(word.substring(1));
+        }
       }
 
     }
 
-    /** Crée un arbre lexical qui contient tous les mots du fichier
-     * spécifié. */
+    /**
+    * Crée un arbre constitué des mots lus dans un fichier
+    * @param fichier le fichier à lire
+    * @return l'ArbreLexical construit
+    */
     public static ArbreLexical lireMots(String fichier) {
 
       ArbreLexical a = new ArbreLexical();
@@ -250,9 +371,12 @@ public class ArbreLexical {
 
       a = lireMots("config/dict-fr.txt");
 
-      System.out.println(a.contient("&confiancé"));
+      // System.out.println(a.contient("ttrr")); // OK
 
-
+      // Test de motsCommencantPar
+      List<String> result = new ArrayList<String>();
+      a.motsCommencantPar("professionnelle", result); // OK
+      // a.motsCommencantPar("anti", result); // OK
 
     }
 }
