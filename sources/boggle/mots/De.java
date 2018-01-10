@@ -3,8 +3,8 @@ package boggle.mots ;
 import java.util.* ;
 import java.io.*;
 
-/** 
- * La classe De permet de stocker des dés. Elle gère le fait qu'il y a dans le jeu exactement NxN dés, dont les valeurs sont spécifiées dans un fichier de configuration. 
+/**
+ * La classe De permet de stocker des dés. Elle gère le fait qu'il y a dans le jeu exactement NxN dés, dont les valeurs sont spécifiées dans un fichier de configuration.
  */
 public class De {
 
@@ -23,7 +23,7 @@ public class De {
 	 */
 	protected String faceVisible ;
 
-	/** 
+	/**
 	 * Le constructeur <code>De</code> qui permet d'instancier l'objet à partir d'un tableau.
 	 *
 	 * @param faces
@@ -36,7 +36,7 @@ public class De {
 
 	/**
 	 * Retourne les faces du <code>De</code> sous forme de tableau.
-	 * 
+	 *
 	 * @return Un tableau des faces du <code>De</code>.
 	 */
 	public String[] getFaces(){
@@ -52,11 +52,11 @@ public class De {
 
 	/**
 	 * Retourne la face visible du <code>De</code>.
-	 * 
+	 *
 	 * @return La face visible du <code>De</code>.
 	 */
 	public String getFaceVisible(){
 		return faceVisible;
 	}
-    
+
 }

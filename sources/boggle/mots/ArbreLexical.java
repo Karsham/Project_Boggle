@@ -15,9 +15,15 @@ public class ArbreLexical {
     private ArbreLexical[] fils; // les sous-arbres
 
     /** Crée un arbre vide (sans aucun mot) */
-    public ArbreLexical() {
+    private ArbreLexical() {
         this.estMot = false;
         this.fils = new ArbreLexical[TAILLE_ALPHABET] ;
+    }
+
+    public static ArbreLexical getInstance(String fichier) {
+      ArbreLexical a = new ArbreLexical();
+      a = a.lireMots(fichier);
+      return a;
     }
 
 
@@ -43,7 +49,7 @@ public class ArbreLexical {
     * @param word le mot à transformer
     * @return le mot convertit, ou une chaîne vide s'il ne peut être convertit
     */
-    private static String normalize(String word) {
+    public static String normalize(String word) {
 
       word = Normalizer.normalize(word, Normalizer.Form.NFD);
       word = word.replaceAll("[^\\p{ASCII}]", "");
@@ -107,6 +113,7 @@ public class ArbreLexical {
 
       // Normalisation du mot
       word = normalize(word);
+      //System.out.println(word);
 
       int l = word.length();
 
@@ -118,6 +125,7 @@ public class ArbreLexical {
       charWord = word.toCharArray();
 
       int position = convert(charWord[0]);
+      // System.out.println(position);
 
       // Si on est à la dernière lettre de word, on vérifie si estMot = true
       if(l == 1) {
@@ -132,6 +140,7 @@ public class ArbreLexical {
       // Si la position est contenue dans this, on passe à ce fils de this
       // Sinon, on retourne false
       if(this.fils[position] == null) {
+        // System.out.println(this.fils[position]);
         return false;
       }
       else {
@@ -263,29 +272,6 @@ public class ArbreLexical {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
     * Se positionne à la dernière lettre de word et renvoie l'arbre lexical correspondant
     * @param word le mot à chercher
@@ -320,7 +306,7 @@ public class ArbreLexical {
     * @param fichier le fichier à lire
     * @return l'ArbreLexical construit
     */
-    public static ArbreLexical lireMots(String fichier) {
+    private ArbreLexical lireMots(String fichier) {
 
       ArbreLexical a = new ArbreLexical();
       int cpt = 0;
@@ -364,19 +350,15 @@ public class ArbreLexical {
         return a ;
     }
 
+    // public static void main(String [] args) {
+    //
+    //   ArbreLexical a = getInstance("config/dict-fr.txt");
+    //
+    //   System.out.println(a.fils[1]);
+    //
+    //   System.out.println(a.contient("dans"));
+    //
+    //
+    // }
 
-    public static void main(String [] args) {
-
-      ArbreLexical a = new ArbreLexical();
-
-      a = lireMots("config/dict-fr.txt");
-
-      // System.out.println(a.contient("ttrr")); // OK
-
-      // Test de motsCommencantPar
-      List<String> result = new ArrayList<String>();
-      a.motsCommencantPar("professionnelle", result); // OK
-      // a.motsCommencantPar("anti", result); // OK
-
-    }
 }
