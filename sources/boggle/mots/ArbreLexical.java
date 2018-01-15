@@ -175,7 +175,6 @@ public class ArbreLexical {
         return false;
       }
 
-
       // Si a est un mot, on le rajoute dans la liste
       if(a.estMot()) {
         resultat.add(prefixe);
@@ -264,7 +263,6 @@ public class ArbreLexical {
       // par la nouvelle liste trouvée
       debutsMots = tempDebutsMots;
 
-
       // Lancer searchAllWords avec les 2 nouvelles listes
       return this.searchAllWords(debutsMots, motsFinis);
 
@@ -298,7 +296,6 @@ public class ArbreLexical {
           return this.fils[position].getTo(word.substring(1));
         }
       }
-
     }
 
     /**

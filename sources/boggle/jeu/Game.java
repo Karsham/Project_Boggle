@@ -15,7 +15,7 @@ public class Game {
 	private static final int N = 4;
 
 	/** Le nombre de tours maximal */
-	private static final int NBTOURS = 3;
+	private static final int NBTOURS = 6;
 
 	/** Le nombre de tours du jeu courant */
 	private int tour;
@@ -81,7 +81,6 @@ public class Game {
 			this.it = joueurs.iterator();
 			return it.next();
 		}
-
 	}
 
 	/**
@@ -98,9 +97,7 @@ public class Game {
 			return false;
 		}
 		return true;
-
 	}
-
 
 	/**
 	* Jouer un tour pour un joueur j
@@ -114,8 +111,8 @@ public class Game {
 		// Afficher le joueur et son score
 		System.out.println(j.getNom() + " : " + j.getScore() + " point(s)");
 
-		// Obtenir une grille de lettres
-		GrilleLettres grille = new GrilleLettres();
+		// Obtenir une grille de N*N lettres
+		GrilleLettres grille = new GrilleLettres(N);
 		grille.getFacesVisibles();
 
 		// Demander les mots au joueur
@@ -171,8 +168,6 @@ public class Game {
 			mot = demanderMot();
 
 		}
-
-
 	}
 
 	/**
@@ -205,21 +200,10 @@ public class Game {
 			}
 		}
 
-		System.out.println("Meilleur score: " + meilleurScore + " par:");
+		System.out.println("Le meilleur score de " + meilleurScore + " a été atteint par:");
 		for(Joueur j : gagnants) {
 			System.out.println(j.getNom());
 		}
-
-
 	}
-
-
-
-
-
-
-
-
-
 
 }

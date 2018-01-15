@@ -10,19 +10,24 @@ import java.io.*;
 public class GrilleLettres {
 
     /**
-     * La constante définissant le nombre de <code>De</code> du plateau de jeu : 6.
-     */
-    protected final int NOMBRE_DES = 16 ;
-
-    /**
      * La constante définissant le nombre de faces d'un <code>De</code> : 6.
      */
     protected final int NOMBRE_FACES = 6 ;
 
     /**
+     * Nombre de <code>De</code> du plateau de jeu
+     */
+    protected int nbDes;
+
+    /**
+    * Taille de la grille
+    */
+    protected int tailleGrille;
+
+    /**
      * La plateau de <code>De</code> de la <code>GrilleLettres</code>, de la taille de NOMBRE_DES.
      */
-    protected De[] des = new De[NOMBRE_DES];
+    protected De[] des;
 
     /**
     * Les indices des lettre d'un mot dans la grille
@@ -31,8 +36,12 @@ public class GrilleLettres {
 
     /**
      * Le constructeur <code>GrilleLettres</code> qui permet d'initialiser les <code>De</code> du jeu.
+     * @param n la taille de la grille (qui contiendra n*n dés)
      */
-    public GrilleLettres(){
+    public GrilleLettres(int n){
+        this.tailleGrille = n;
+        this.nbDes = n * n;
+        this.des = new De[this.nbDes];
         this.initialiserDes();
     }
 
@@ -47,9 +56,9 @@ public class GrilleLettres {
 
         try{
             ImportFile dataDes = new ImportFile(new File("./").getAbsolutePath() + "/config/des-4x4.csv");
-            String [][] datas = dataDes.getResultTab(NOMBRE_DES, NOMBRE_FACES);
+            String [][] datas = dataDes.getResultTab(this.nbDes, NOMBRE_FACES);
 
-            for (int i=0; i<NOMBRE_DES; i++) {
+            for(int i = 0; i < this.nbDes; i++) {
                 des[i] = new De(datas[i]);
             }
 
@@ -60,11 +69,9 @@ public class GrilleLettres {
 
     /**
      * Retourne les faces visibles du jeu, à partir des <code>De</code> initialisés à la construction.
-     *
-     * @return Un tableau des faces visibles du plateau de jeu.
      */
     public void getFacesVisibles(){
-        for (int i=0; i<NOMBRE_DES; i++) {
+        for (int i=0; i<this.nbDes; i++) {
             System.out.print( des[i].getFaceVisible() + " ");
             if (((i+1) % 4) == 0) {
                 System.out.println();
@@ -89,14 +96,12 @@ public class GrilleLettres {
 
           String premiereLettre = mot.substring(0, 1).toUpperCase();
 
-          for(int i = 0; i < NOMBRE_DES; i++) {
+          for(int i = 0; i < this.nbDes; i++) {
             if(des[i].getFaceVisible().equals(premiereLettre.toUpperCase())) {
 
                 indicesLettres = new ArrayList<Integer>();
                 indicesLettres.add(i);
-                // System.out.println("Premiere lettre - - - - - - - - - - - -");
-                // System.out.println("mot: " + mot.substring(1));
-                // System.out.println("indicesLettres: " + indicesLettres);
+
                 estMotValide(mot.substring(1), indicesLettres);
 
             }
@@ -106,7 +111,12 @@ public class GrilleLettres {
         // Recherche des indices adjacents au dernier indice trouvé si indicesLettres n'est pas vide
 
           // Les indices adjacents à la dernière lettre
-          int[] indicesAdjacents = GrilleLettres.indicesAdjacents(indicesLettres.get(indicesLettres.size() - 1));
+          int[] indicesAdjacents = GrilleLettres.indicesAdjacents(indicesLettres.get(indicesLettres.size() - 1), this.tailleGrille);
+          // System.out.println("Indices adjacents pour " + indicesLettres.get(indicesLettres.size() - 1));
+          // for(int i : indicesAdjacents) {
+          //   System.out.println(i);
+          // }
+
           int indicesAdjacentsLength = indicesAdjacents.length;
 
           // Marquer les indices déjà parcourus de indicesAdjacents
@@ -134,14 +144,14 @@ public class GrilleLettres {
             ArrayList<Integer> nouvelIndicesLettres = new ArrayList<Integer>();
             nouvelIndicesLettres.addAll(indicesLettres);
             if(indicesAdjacents[i] != -1) {
-
+              //System.out.println(indicesAdjacents[i]);
               if(des[indicesAdjacents[i]].getFaceVisible().equals(lettreSuivante)) {
+                // Vérifier que la lettre n'est pas déjà prise dans le mot
+                if(!indicesLettres.contains(indicesAdjacents[i])) {
+                  nouvelIndicesLettres.add(indicesAdjacents[i]);
+                  estMotValide(motSuivant, nouvelIndicesLettres);
+                }
 
-                nouvelIndicesLettres.add(indicesAdjacents[i]);
-                // System.out.println("--------------------------------------");
-                // System.out.println("mot: " + motSuivant);
-                // System.out.println("indicesLettres: " + nouvelIndicesLettres);
-                estMotValide(motSuivant, nouvelIndicesLettres);
               }
             }
           }
@@ -152,6 +162,11 @@ public class GrilleLettres {
       }
     }
 
+    /**
+    * Donne le nombre de points gagnés par le joueur pour un mot.
+    * @param mot le mot valide donné par le joueur.
+    * @return le nombre de points gagnés.
+    */
     public int nbreDePointsDuMot(String mot) {
 
       int l = mot.length();
@@ -175,51 +190,51 @@ public class GrilleLettres {
       }
     }
 
-
     /**
     * Méthode permettant de déterminer quels sont les indices adjacents d'un indice
     * en particulier dans la grille des lettres
     *
     * @param indice l'indice dans la grille pour lequel on recherche les indices adjacents.
+    * @param n la taille de la grille (nombre de dés d'un côté du carré).
     * @return le tableau contenant les indices adjacents.
     */
-    private static int[] indicesAdjacents(int indice) {
+    private static int[] indicesAdjacents(int indice, int n) {
 
-      // A REFAIRE
-      switch(indice) {
-        case 0:
-          return new int[] {1, 4, 5};
-        case 1:
-          return new int[] {0, 2, 4, 5, 6};
-        case 2:
-          return new int[] {1, 3, 5, 6, 7};
-        case 3:
-          return new int[] {2, 7, 7};
-        case 4:
-          return new int[] {0, 1, 5, 8, 9};
-        case 5:
-          return new int[] {0, 1, 2, 4, 6, 8, 9, 10};
-        case 6:
-          return new int[] {1, 2, 3, 5, 7, 9, 10, 11};
-        case 7:
-          return new int[] {2, 3, 6, 10, 11};
-        case 8:
-          return new int[] {4, 5, 9, 12, 13};
-        case 9:
-          return new int[] {4, 5, 6, 8, 10, 12, 13, 14};
-        case 10:
-          return new int[] {5, 6, 7, 9, 11, 13, 14, 15};
-        case 11:
-          return new int[] {6, 7, 10, 14, 15};
-        case 12:
-          return new int[] {8, 9, 13};
-        case 13:
-          return new int[] {8, 9, 10, 12, 14};
-        case 14:
-          return new int[] {9, 10, 11, 13, 15};
-        default:
-          return new int[] {10, 11, 14};
-      }
+      //System.out.println("Indice: " + indice);
+
+        // Les coins du carré
+        if(indice == 0) {
+          return new int[] {1, n, n + 1};
+        }
+        else if(indice == n - 1) {
+          return new int[] {n - 2, 2 * n - 1, 2 * n - 2};
+        }
+        else if(indice == n * n - n) {
+          return new int[] {n * n - 2 * n , n * n - 2 * n + 1, n * n - n + 1};
+        }
+        else if(indice == n * n - 1) {
+          return new int[] {n * n - n - 2, n * n - n - 1, n * n - 2};
+        }
+        // Bord haut
+        else if(indice >= 1 && indice < n - 1) {
+          return new int[] {indice - 1, indice + 1, indice + n - 1, indice + n, indice + n + 1 };
+        }
+        // Bord gauche
+        else if(indice % n == 0 && indice != 0 && indice != n * n - n) {
+          return new int[] {indice - n, indice - n + 1, indice + 1, indice + n, indice + n + 1 };
+        }
+        // Bord bas
+        else if(indice > n * n - n && indice < n * n - 1) {
+          return new int[] {indice - 1, indice - n - 1, indice - n, indice - n + 1, indice + 1};
+        }
+        // Bord droit
+        else if(indice % n == n - 1) {
+          return new int[] {indice - n, indice - n - 1, indice - 1, indice + n - 1, indice + n};
+        }
+        // A l'intérieur du carré
+        else {
+          return new int[] {indice - n - 1, indice - n, indice - n + 1, indice - 1, indice + 1, indice + n - 1, indice + n, indice + n + 1};
+        }
     }
 
 
