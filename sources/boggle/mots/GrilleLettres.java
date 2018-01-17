@@ -40,6 +40,7 @@ public class GrilleLettres {
     /**
      * Le constructeur <code>GrilleLettres</code> qui permet d'initialiser les <code>De</code> du jeu.
      * @param n la taille de la grille (qui contiendra n*n dés)
+     * @param fichier le fichier de configuration de la grille de jeu.
      */
     public GrilleLettres(int n, String fichier){
         this.fichierConfigDes = fichier;

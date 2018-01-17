@@ -59,7 +59,7 @@ public class Game {
 	/**
 	* Récupère le fichier de configuration et lit les propriétés
 	*
-	* @param le nom du fichier de configuration.
+	* @param fileName nom du fichier de configuration.
 	*/
 	private void getConfig(String fileName) {
 

@@ -148,8 +148,10 @@ public class ArbreLexical {
 
     }
 
-    /** Ajoute à la liste <code>resultat<code> tous les mots de
+    /** Ajoute à la liste <code>resultat</code> tous les mots de
      * l'arbre commençant par le préfixe spécifié.
+     * @param prefixe le préfixe recherché.
+     * @param resultat Liste de mots commençant par le préfixe (vide au départ).
      * @return <code>true</code> si <code>resultat</code> a été
      * modifié, <code>false</code> sinon.*/
     public boolean motsCommencantPar(String prefixe, List<String> resultat) {
@@ -200,7 +202,6 @@ public class ArbreLexical {
 
     /**
     * Méthode qui cherche tous les mots contenus dans un arbre
-    * @param a l'arbre dans lequel chercher
     * @param debutsMots la liste des commencements de mots possibles
     * @param motsFinis la liste des mots complets
     * @return la liste des mots finis

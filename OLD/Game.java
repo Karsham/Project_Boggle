@@ -15,8 +15,8 @@ public class Game {
 		int choix;
 
 		System.out.print("\033[H\033[2J");
-		System.out.println("Bienvenue dans Project_Boggle.\n");		
-		do{										
+		System.out.println("Bienvenue dans Project_Boggle.\n");
+		do{
 			choix = InterfaceUserText.menu();
 			System.out.print("\nAppuyez sur une touche pour continuer...");
 			Clavier.readString();

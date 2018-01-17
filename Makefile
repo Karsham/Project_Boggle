@@ -6,4 +6,4 @@ exec:
 
 doc:
 	mkdir -p docs/;
-	javadoc -author -private -sourcepath ./sources sources/boggle/*.java -d docs
+	javadoc -d docs -author -private -sourcepath ./sources sources/boggle/*.java -subpackages boggle.jeu boggle.mots boggle.ui
