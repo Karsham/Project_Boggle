@@ -12,13 +12,13 @@ import boggle.mots.*;
 public class Game {
 
 	/** La taille de la grille du jeu */
-	private static final int N = 4;
+	private static final int N = 5;
 
 	/** Le nombre de tours maximal */
 	private static final int NBTOURS = 6;
 
 	/** Fichier de configuration */
-	private static final String CONFIG_FILE = "config/regles-4x4.config";
+	private static final String CONFIG_FILE = "config/regles-5x5.config";
 
 	/** Taille min des mots */
 	private int taille_min;
