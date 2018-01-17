@@ -175,7 +175,7 @@ public class Game {
 		System.out.println(j.getNom() + " : " + j.getScore() + " point(s)");
 
 		// Obtenir une grille de N*N lettres
-		GrilleLettres grille = new GrilleLettres(N);
+		GrilleLettres grille = new GrilleLettres(N, config_des);
 		grille.getFacesVisibles();
 
 		// Demander les mots au joueur

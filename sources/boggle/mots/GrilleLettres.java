@@ -14,6 +14,9 @@ public class GrilleLettres {
      */
     protected final int NOMBRE_FACES = 6 ;
 
+    /** Fichier de configuration des dés */
+    protected String fichierConfigDes;
+
     /**
      * Nombre de <code>De</code> du plateau de jeu
      */
@@ -38,7 +41,8 @@ public class GrilleLettres {
      * Le constructeur <code>GrilleLettres</code> qui permet d'initialiser les <code>De</code> du jeu.
      * @param n la taille de la grille (qui contiendra n*n dés)
      */
-    public GrilleLettres(int n){
+    public GrilleLettres(int n, String fichier){
+        this.fichierConfigDes = fichier;
         this.tailleGrille = n;
         this.nbDes = n * n;
         this.des = new De[this.nbDes];
@@ -55,7 +59,7 @@ public class GrilleLettres {
     public void initialiserDes(){
 
         try{
-            ImportFile dataDes = new ImportFile(new File("./").getAbsolutePath() + "/config/des-4x4.csv");
+            ImportFile dataDes = new ImportFile(this.fichierConfigDes);
             String [][] datas = dataDes.getResultTab(this.nbDes, NOMBRE_FACES);
 
             for(int i = 0; i < this.nbDes; i++) {
