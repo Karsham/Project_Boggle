@@ -3,6 +3,10 @@ package boggle;
 import boggle.jeu.Game;
 import boggle.mots.*;
 
+import java.util.Properties;
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 public class BoggleGame {
 
   public static void main(String [] args) {
@@ -19,7 +23,6 @@ public class BoggleGame {
     }
 
     game.finDeJeu();
-
 
   }
 }

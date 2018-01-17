@@ -17,6 +17,18 @@ public class Game {
 	/** Le nombre de tours maximal */
 	private static final int NBTOURS = 6;
 
+	/** Fichier de configuration */
+	private static final String CONFIG_FILE = "config/regles-4x4.config";
+
+	/** Taille min des mots */
+	private int taille_min;
+
+	/** Fichier de config des dés */
+	private String config_des;
+
+	/** Fichier du dictionnaire de mots */
+	private String dictFile;
+
 	/** Le nombre de tours du jeu courant */
 	private int tour;
 
@@ -34,10 +46,61 @@ public class Game {
 
 	/** Constructeur qui construit l'arbre lexical */
 	public Game() {
-		this.a = ArbreLexical.getInstance("config/dict-fr.txt");
+
+		this.getConfig(CONFIG_FILE);
+
+		// System.out.println(this.dictFile);
+		this.a = ArbreLexical.getInstance(this.dictFile);
 		this.nbJoueurs = 0;
 		this.joueurs = null;
 		this.tour = 0;
+	}
+
+	/**
+	* Récupère le fichier de configuration et lit les propriétés
+	*
+	* @param le nom du fichier de configuration.
+	*/
+	private void getConfig(String fileName) {
+
+		// Récupération de la configuration
+		BufferedReader br = null;
+		Properties props = new Properties();
+
+		try {
+			br = new BufferedReader(new FileReader(fileName));
+
+      props.load(br);
+
+    }
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			finally {
+				try {
+					br.close();
+				}
+				catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+			// Récupération de la taille min d'un mot
+			try {
+				this.taille_min = Integer.parseInt(props.getProperty("taille-min"));
+			}
+			catch(Exception e) {
+				System.out.println("Mauvais format de fichier de configuration du jeu.");
+			}
+
+			// Récupération des dés
+			this.config_des = "config/";
+			this.config_des += props.getProperty("des");
+
+
+			// Récupération du fichier du dictionnaire
+			this.dictFile = "config/";
+			this.dictFile += props.getProperty("dictionnaire");
 	}
 
 	/**

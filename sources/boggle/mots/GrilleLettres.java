@@ -73,7 +73,7 @@ public class GrilleLettres {
     public void getFacesVisibles(){
         for (int i=0; i<this.nbDes; i++) {
             System.out.print( des[i].getFaceVisible() + " ");
-            if (((i+1) % 4) == 0) {
+            if (((i+1) % this.tailleGrille) == 0) {
                 System.out.println();
             }
         }
