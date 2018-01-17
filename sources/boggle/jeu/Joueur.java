@@ -32,23 +32,28 @@ public class Joueur {
 		score = 0;
 	}
 
+	/**
+	* Donne le nom du joueur.
+	* @return le nom du joueur
+	*/
 	public String getNom() {
 		return this.nom;
 	}
 
 	/**
-     * La fonction qui permet de connaître le score du <code>Joueur</code>.
-     */
+   * La fonction qui permet de connaître le score du <code>Joueur</code>.
+	 * @return le score
+   */
 	public int getScore(){
 		return this.score;
 	}
 
 	/**
-     * La fonction qui permet d'ajouter des points au score du <code>Joueur</code>.
-     *
-     * @param points
-     *				Le nombre de points à ajouter au score du joueur.
-     */
+   * La fonction qui permet d'ajouter des points au score du <code>Joueur</code>.
+   *
+   * @param points
+   *				Le nombre de points à ajouter au score du joueur.
+   */
 	public void addPoints(int points){
 		score += points;
 	}

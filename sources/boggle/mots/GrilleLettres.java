@@ -49,6 +49,10 @@ public class GrilleLettres {
         this.initialiserDes();
     }
 
+    /**
+    * Donne les indices du mot trouvé.
+    * @return un ArrayList des indices du mot trouvé.
+    */
     public ArrayList<Integer> getIndices() {
       return this.indicesDuMotTrouve;
     }
@@ -240,12 +244,5 @@ public class GrilleLettres {
           return new int[] {indice - n - 1, indice - n, indice - n + 1, indice - 1, indice + 1, indice + n - 1, indice + n, indice + n + 1};
         }
     }
-
-
-
-    // public static void main(String[] args) {
-    //     GrilleLettres grille = new GrilleLettres();
-    //     grille.getFacesVisibles();
-    // }
 
 }

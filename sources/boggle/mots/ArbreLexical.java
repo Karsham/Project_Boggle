@@ -64,7 +64,6 @@ public class ArbreLexical {
       }
     }
 
-
     /**
     * Ajoute un mot dans l'arbre
     * @param word le mot à ajouter
@@ -347,15 +346,5 @@ public class ArbreLexical {
         return a ;
     }
 
-    // public static void main(String [] args) {
-    //
-    //   ArbreLexical a = getInstance("config/dict-fr.txt");
-    //
-    //   System.out.println(a.fils[1]);
-    //
-    //   System.out.println(a.contient("dans"));
-    //
-    //
-    // }
 
 }

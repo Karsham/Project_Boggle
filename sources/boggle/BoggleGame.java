@@ -7,6 +7,10 @@ import java.util.Properties;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+/**
+* Classe permettant de lancer le jeu.
+*
+*/
 public class BoggleGame {
 
   public static void main(String [] args) {
