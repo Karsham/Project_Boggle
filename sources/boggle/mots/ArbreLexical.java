@@ -187,7 +187,7 @@ public class ArbreLexical {
       // On cherche tous les mots de this commençant par le mot de résultat
       resultat = this.searchAllWords(debutsMots, resultat);
 
-      System.out.println(resultat);
+      // System.out.println(resultat);
 
 
       // Si on en a trouvé, on retourne true, sinon, false
@@ -209,7 +209,6 @@ public class ArbreLexical {
     private List<String> searchAllWords(List<String> debutsMots, List<String> motsFinis) {
 
       int l = debutsMots.size();
-      System.out.println("l: " + l);
 
       // Arbre lexical suivant
       ArbreLexical temp = null;
@@ -227,7 +226,7 @@ public class ArbreLexical {
 
         String word = debutsMots.get(j);
 
-        System.out.println("word: " + word);
+        // System.out.println("word: " + word);
 
         // Aller à l'arbre correspondant
         try {
@@ -245,14 +244,14 @@ public class ArbreLexical {
             if(temp.fils[i].estMot()) {
               // On le rajoute à motsfinis
               String nouveauMotFini = word + alphabet.substring(i, i + 1);
-              System.out.println("nouveauMotFini: " +  nouveauMotFini);
+              // System.out.println("nouveauMotFini: " +  nouveauMotFini);
               motsFinis.add(nouveauMotFini);
             }
             // Si ça n'est pas un mot
             else {
               // On le rajoute à debutsMots
               String nouveauDebutDeMot = word + alphabet.substring(i, i + 1);
-              System.out.println("nouveauDebutDeMot: " +  nouveauDebutDeMot);
+              // System.out.println("nouveauDebutDeMot: " +  nouveauDebutDeMot);
               tempDebutsMots.add(nouveauDebutDeMot);
             }
           }

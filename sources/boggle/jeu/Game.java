@@ -182,7 +182,32 @@ public class Game {
 		String mot = demanderMot();
 
 		// Tant que le joueur propose des mots
-		while(!mot.equals("S")) {
+		while(!(mot.equals("S")||mot.equals("s"))) {
+
+			// Demande d'aide du joueur
+			if(mot.equals("H")||mot.equals("h")) {
+
+				ArrayList<String> listeMots = this.demanderPrefixe();
+
+				if(listeMots.size() == 0) {
+					System.out.println("Aucun mot trouvé.");
+				}
+				else {
+					int count = 0;
+					System.out.println("Voici quelques mots:");
+					Iterator it = listeMots.iterator();
+					while(it.hasNext() && count < 20) {
+						System.out.println(it.next());
+						count++;
+					}
+				}
+
+				System.out.println();
+				grille.getFacesVisibles();
+				mot = demanderMot();
+				continue;
+
+			}
 
 			// Vérifier que le mot est valide
 			mot = ArbreLexical.normalize(mot);
@@ -238,10 +263,28 @@ public class Game {
 	* @return le mot entré
 	*/
 	private static String demanderMot() {
-		System.out.println("Quel mot proposez vous? (Tapez 'S' pour passer au joueur suivant) ");
+		System.out.println("Quel mot proposez vous? (Tapez 'S' pour passer au joueur suivant, ou 'H' pour de l'aide) ");
 		String mot = Clavier.readString();
 		return mot;
 	}
+
+	/**
+	* Méthodes allant chercher tous les mots commençant par un préfixe.
+	*
+	* @return un ArrayList des mots trouvés.
+	*/
+	private ArrayList<String> demanderPrefixe() {
+
+		ArrayList<String> mots = new ArrayList<String>();
+
+		System.out.print("Vous cherchez les mots commençant par: ");
+		String prefixe = Clavier.readString();
+		this.a.motsCommencantPar(prefixe, mots);
+
+		return mots;
+
+	}
+
 
 	/**
 	* Gère la fin du jeu (affichage des scores)
