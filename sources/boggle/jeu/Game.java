@@ -48,12 +48,11 @@ public class Game {
 	public Game() {
 
 		this.getConfig(CONFIG_FILE);
-
-		// System.out.println(this.dictFile);
 		this.a = ArbreLexical.getInstance(this.dictFile);
 		this.nbJoueurs = 0;
 		this.joueurs = null;
 		this.tour = 0;
+		
 	}
 
 	/**

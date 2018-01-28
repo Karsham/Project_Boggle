@@ -6,7 +6,7 @@ import boggle.ui.*;
 import java.util.* ;
 import java.io.*;
 
-/** 
+/**
  * La classe InterfaceUserText fournit une interface texte au joueur.
  */
 public class InterfaceUserText {
@@ -35,15 +35,16 @@ public class InterfaceUserText {
 		try{
 			ImportFile regles = new ImportFile( path );
 			System.out.println( regles.getResult() );
-			
+
 		}catch( Exception e ){
 			System.out.println("Erreur : "+e.getMessage());
 		}
-		
+
 	}
 
 	/**
      * Affiche le menu, et exécute la commande demandée.
+		 * @return le choix du joueur.
      */
 	public static int menu(){
 		System.out.println("Que voulez-vous faire ?\n");

@@ -2,21 +2,22 @@ package boggle;
 
 import java.io.*;
 
-/** 
+/**
  * La classe ImportFile permet d'importer les données d'un fichier CSV.
  */
 public class ImportFile {
 
-	/** 
+	/**
 	 * La chaîne qui contient le résultat de l'extraction de données.
 	 */
 	private String result = "";
 
-	/** 
+	/**
 	 * Le constructeur <code>ImportFile</code> qui permet d'instancier l'objet à partir du chemin d'un fichier.
 	 *
 	 * @param path
 	 *				Le chemin du fichier à analyser.
+	 * @throws FileNotFoundException si le fochier à importé n'est pas trouvé.
 	 */
 	public ImportFile(String path) throws FileNotFoundException {
 		try {
@@ -41,12 +42,12 @@ public class ImportFile {
 						}
 					}
 					result += "\n";
-					
+
 				}else if (flagCSV == false){
 					result += ligne + "\n" ;
 				}
 
-				
+
 			}
 			result = result.substring(0, result.length()-1); //Pour enlever le dernier \n
 
@@ -59,7 +60,7 @@ public class ImportFile {
 
 	/**
 	 * Retourne les données extraites.
-	 * 
+	 *
 	 * @return Une chaîne de caractères, qui correspond aux données extraites.
 	 */
 	public String getResult(){
@@ -92,7 +93,7 @@ public class ImportFile {
 		tamere = tamere.substring(0, tamere.length()-1) + "config/regles.txt";
 		try{
 			ImportFile regles = new ImportFile( tamere );
-			System.out.println( regles.getResult() );		
+			System.out.println( regles.getResult() );
 		}catch( Exception e ){
 			System.out.println("Erreur : "+e.getMessage());
 		}

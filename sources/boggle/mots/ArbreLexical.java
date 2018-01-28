@@ -9,10 +9,30 @@ import java.text.*;
  * d'accéder rapidement à un ensemble de mots.*/
 public class ArbreLexical {
 
+    /**
+    * Taille de l'alphabet
+    */
     public static final int TAILLE_ALPHABET = 26 ;
+
+    /**
+    * Chaîne de caractères représentant les lettres de l'alphabet en minuscules.
+    */
     private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
-    private boolean estMot ; // vrai si le noeud courant est la fin d'un mot valide
-    private ArbreLexical[] fils; // les sous-arbres
+
+    /**
+    * <code>true</code> si le noeud courant est la fin d'un mot valide, <code>false</code> sinon.
+    */
+    private boolean estMot;
+
+    /**
+    * Instance unique de l'arbre lexical
+    */
+    private static ArbreLexical arbreUnique = null;
+
+    /**
+    * Sous-arbres de l'arbre lexical courant.
+    */
+    private ArbreLexical[] fils;
 
     /** Crée un arbre vide (sans aucun mot) */
     private ArbreLexical() {
@@ -20,12 +40,21 @@ public class ArbreLexical {
         this.fils = new ArbreLexical[TAILLE_ALPHABET] ;
     }
 
+    /**
+    * Méthode permettant de retourner une instance d'un arbre lexical.
+    * @param fichier le nom du fichier à charger dans l'arbre lexical.
+    * @return une instance de l'arbre lexical construit.
+    */
     public static ArbreLexical getInstance(String fichier) {
-      ArbreLexical a = new ArbreLexical();
-      a = a.lireMots(fichier);
-      return a;
+      if(ArbreLexical.arbreUnique == null) {
+        ArbreLexical a = new ArbreLexical();
+        a = a.lireMots(fichier);
+        return a;
+      }
+      else {
+        return ArbreLexical.arbreUnique;
+      }
     }
-
 
     /**
     * Indique si l'arbre lexical est un mot
@@ -45,7 +74,7 @@ public class ArbreLexical {
     }
 
     /**
-    * Fonction convertissant un mot en minuscules, sans accets ou caractères spéciaux
+    * Fonction convertissant un mot en minuscules, sans accents ou caractères spéciaux
     * @param word le mot à transformer
     * @return le mot convertit, ou une chaîne vide s'il ne peut être convertit
     */
@@ -270,7 +299,7 @@ public class ArbreLexical {
 
 
     /**
-    * Se positionne à la dernière lettre de word et renvoie l'arbre lexical correspondant
+    * Se positionne à la dernière lettre de <code>word</code> et renvoie l'arbre lexical correspondant
     * @param word le mot à chercher
     * @return l'arbre lexical correspondant à la dernière lettre de word
     * @throws Exception si le mot n'existe pas dans l'arbre
