@@ -1,2 +1,5 @@
-On joue à faire des mots.
-VOILA
+Selon une taille de grille donnée - de forme carrée-, on remplit une grille de lettres provenant de dés lancés.
+Il faut utiliser ces lettres pour former des mots intelligibles. Ces mots doivent faire au moins un caractère de moins que la taille de la grille.
+Exemple : La grille fait 4 lettres de côté, les mots proposés par le joueur doivent faire au moins 3 caractères. Puis pour une grille de 5 lettres de côté, au moins 4 caractères. Et ainsi de suite...
+
+Le but est de faire le plus de points possibles. Bonne chance !

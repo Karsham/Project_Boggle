@@ -33,7 +33,7 @@ public class InterfaceUserText {
      * Affiche une grille de jeu.
      */
 	private static void grille(){
-		GrilleLettres grille = new GrilleLettres(4, "config/des-4x4.csv");
+		GrilleLettres grille = new GrilleLettres(5, "config/des-5x5.csv");
         grille.getFacesVisibles();
 	}
 
@@ -77,6 +77,8 @@ public class InterfaceUserText {
 			regles();
 		}else if(choice == 4){
 			System.out.println("AU REVUAR !");
+		}else{
+			System.out.println("BAD CHOICE ! Entrez un chiffre correspondant à ceux du menu s'il vous plaît. Merci ^^");
 		}
 
 		return choice;

@@ -2,6 +2,9 @@ package boggle.ui;
 
 import java.io.*;
 
+/**
+ * La classe Clavier permet de gérer l'entrée standard.
+ */
 public class Clavier
 {
 
