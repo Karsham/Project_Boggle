@@ -2,6 +2,7 @@
 
 Pour compiler le jeu:
 
+	./projetcomp
     make compil
 
 Pour lancer le jeu:
