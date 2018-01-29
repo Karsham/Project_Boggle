@@ -3,6 +3,7 @@ package boggle.ui;
 import boggle.*;
 import boggle.mots.*;
 import boggle.ui.*;
+import boggle.jeu.*;
 import java.util.* ;
 import java.io.*;
 
@@ -15,14 +16,24 @@ public class InterfaceUserText {
      * Exécute le jeu.
      */
 	private static void jeu(){
-		System.out.println("Coming soon...");
+		Game game = new Game();
+
+	    // Initialiser les joueurs
+	    game.initialiseJoueurs();
+
+	    // Jeu
+	    while(!game.estFini()) {
+	      game.jouer(game.nextJoueur());
+	    }
+
+	    game.finDeJeu();
 	}
 
 	/**
      * Affiche une grille de jeu.
      */
 	private static void grille(){
-		GrilleLettres grille = new GrilleLettres();
+		GrilleLettres grille = new GrilleLettres(4, "config/des-4x4.csv");
         grille.getFacesVisibles();
 	}
 
