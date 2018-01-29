@@ -1,8 +1,9 @@
 compil:
+	./projetcomp
 	javac -sourcepath sources -d classes sources/boggle/BoggleGame.java
 
 exec:
-	java -classpath classes boggle.BoggleGame
+	java -jar Prog.jar
 
 doc:
 	mkdir -p docs/;
